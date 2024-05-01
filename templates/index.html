@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clustering Web App</title>
+</head>
+<body>
+    <h1>Clustering Web App</h1>
+    
+    {% if cluster_titles %}
+    <h2>Cluster Titles:</h2>
+    <ul>
+        {% for cluster_num, title in cluster_titles.items() %}
+        <li>{{ cluster_num }}: {{ title }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="/" method="POST">
+        <label for="num_clusters">Number of Clusters:</label>
+        <input type="number" id="num_clusters" name="num_clusters" required><br><br>
+        <label for="method">Choose a method:</label>
+        <select id="method" name="method">
+            <option value="kmeans">K-means with TF-IDF</option>
+            <option value="gmm">Gaussian Mixture Model (GMM) with Model</option>
+            <option value="gpt-kmeans">GPT-2 K-means with embeddings</option>
+        </select><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if clustered_claims %}
+    <h2>Clustered Claims:</h2>
+    <ul>
+        {% for cluster in clustered_claims %}
+        <li>Cluster {{ loop.index }}:
+            <ul>
+                {% for claim in cluster %}
+                <li>{{ claim }}</li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% if img_str %}
+    <img src="data:image/png;base64,{{ img_str }}" alt="Clustering Plot">
+    {% endif %}
+</body>
+</html>
